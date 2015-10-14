@@ -1,6 +1,6 @@
 {
   "name": "@tatumcreative/current-state",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A current state manager for reactive apps, with a changed event",
   "main": "current-state.js",
   "scripts": {
