@@ -1,36 +1,37 @@
 # Current State
 
-A node module that provides a mutable object that stores state. Once the underyling object is mutated through the interface a 'changed' event is fired for reactive application design. It unsafely provides the underlying data object using the get() command, and re-uses the passed in object.
+A node module that provides a mutable object that stores state. Once the underyling object is mutated through the interface a `changed` event is fired for reactive application design. It unsafely provides the underlying data object using the `get()` command, and re-uses the passed in object. The changed event provides the `current` object.
 
 # Usage
 
 	var CurrentState = require('current-state')
 	
-	var current = CurrentState({
+	var state = CurrentState({
 		character : "Link",
 		game : "Ocarina of Time"
 	})
 	
-	var handleChange = function() {
-		console.log( "You are playing", current.get('game') )
-		console.log( "Current state:", current.get() )
+	var handleChange = function( current ) {
+		console.log( "You are playing", current.game )
+		console.log( "Your character is:", state.get('character') )
+		console.log( "Current state:", state.get() )
 	}
 	
-	current.on('changed', handleChange)
+	state.on('changed', handleChange)
 	
-	current.set("character", "Zelda")
-	current.set({game: "Majora's Mask"})
+	state.set("character", "Zelda")
+	state.set({game: "Majora's Mask"})
 	
-	current.off('changed', handleChange)
+	state.off('changed', handleChange)
 
 # Interface
 
-	current.get()
-	current.get("key")
-	current.set("key", "value")
-	current.set(object)
-	current.set("key", "value", true) //Set silently
-	current.set(object, true) //Set silently
-	current.on('changed', callback)
-	current.off('changed', callback)
-	current.emitter
+	state.get()
+	state.get("key")
+	state.set("key", "value")
+	state.set(object)
+	state.set("key", "value", true) //Set silently
+	state.set(object, true) //Set silently
+	state.on('changed', function( current ) { ... })
+	state.off('changed', function( current ) { ...})
+	state.emitter
