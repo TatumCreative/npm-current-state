@@ -1,0 +1,22 @@
+{
+  "name": "@tatumcreative/current-state",
+  "version": "1.0.0",
+  "description": "A current state manager for reactive apps, with a changed event",
+  "main": "current-state.js",
+  "scripts": {
+    "test": "browserify tests.js | node | faucet"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TatumCreative/npm-current-state.git"
+  },
+  "author": "Greg Tatum",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TatumCreative/npm-current-state/issues"
+  },
+  "homepage": "https://github.com/TatumCreative/npm-current-state#readme",
+  "dependencies": {
+    "object-assign": "^4.0.1"
+  }
+}
