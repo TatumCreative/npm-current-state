@@ -29,6 +29,8 @@ A node module that provides a mutable object that stores state. Once the underyl
 	current.get("key")
 	current.set("key", "value")
 	current.set(object)
+	current.set("key", "value", true) //Set silently
+	current.set(object, true) //Set silently
 	current.on('changed', callback)
 	current.off('changed', callback)
 	current.emitter
