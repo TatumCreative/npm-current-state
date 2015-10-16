@@ -7,11 +7,11 @@ Test("current-state", function(t) {
 		character : "Link",
 		game : "Ocarina of Time"
 	}
-	var current = CurrentState(data)
+	var state = CurrentState(data)
 
 	var timesChanged = 0
 	
-	current.on('changed', function() {
+	state.onChange(function() {
 		timesChanged++
 	})
 	
@@ -19,24 +19,24 @@ Test("current-state", function(t) {
 
 		t.plan(2)
 		
-		t.equal( current.get("character"),  "Link",  "gets by key-pair")
-		t.equal( current.get(), data,  "gets underlying data")
+		t.equal( state.get("character"),  "Link",  "gets by key-pair")
+		t.equal( state.get(), data,  "gets underlying data")
 	})
 	
 	t.test("set functionality", function(t) {
 		
 		t.plan(4)
 		
-		current.set('character', 'Zelda')
+		state.set('character', 'Zelda')
 		
-		t.equal( timesChanged, 1, "changed emitter fires")
-		t.equal( current.get('character'), 'Zelda', "the current state object is changed")
+		t.equal( timesChanged, 1, "changed handler runs")
+		t.equal( state.get('character'), 'Zelda', "the state state object is changed")
 
-		current.set({game: "Majora's Mask"})
+		state.set({game: "Majora's Mask"})
 		
-		t.equal( timesChanged, 2, "changed emitter fires")
+		t.equal( timesChanged, 2, "changed handler runs")
 		t.deepEquals(
-			current.get(),
+			state.get(),
 			{
 				character : "Zelda",
 				game : "Majora's Mask"
@@ -49,16 +49,16 @@ Test("current-state", function(t) {
 		
 		t.plan(4)
 		
-		current.set('character', 'Goron', true)
+		state.set('character', 'Goron', true)
 		
-		t.equal( timesChanged, 2, "changed emitter does not fire")
-		t.equal( current.get('character'), 'Goron', "the current state object is changed")
+		t.equal( timesChanged, 2, "changed handler does not fire")
+		t.equal( state.get('character'), 'Goron', "the state state object is changed")
 
-		current.set({game: "A Link to the Past"}, true)
+		state.set({game: "A Link to the Past"}, true)
 		
-		t.equal( timesChanged, 2, "changed emitter does not fire")
+		t.equal( timesChanged, 2, "changed handler does not fire")
 		t.deepEquals(
-			current.get(),
+			state.get(),
 			{
 				character : "Goron",
 				game : "A Link to the Past"
@@ -67,25 +67,52 @@ Test("current-state", function(t) {
 		)
 	})
 	
-	t.test("emitter", function(t) {
+	t.test("onChange", function(t) {
 		
-		t.plan(3)
+		t.plan(2)
 		
-		t.equal( typeof current.emitter,  "object",  "has an events emitter")
-		
-		var handleChanged = function( event ) {
-			t.equal( event, data, "changed event passes data object" )
+		var handleChanged = function( current, previous ) {
+			t.equal( current, data, "changed event passes data object" )
 		}
 		
-		current.on('changed', handleChanged)
+		state.onChange( handleChanged )
 
-		current.set("character", "Link")
+		state.set("character", "Link")
 		
-		current.off('changed', handleChanged)
+		state.offChange( handleChanged )
 		
-		current.set("character", "Link")
+		state.set("character", "Link")
 		
 		t.ok("change event was removed")
+	})
+	
+	t.test("onChange previous/current", function(t) {
+		
+		t.plan(4)
+		
+		var prevCharacter
+		var currCharacter
+		
+		var handleChanged = function( current, previous ) {
+			
+			t.equal( current.character, currCharacter, "current matches" )
+			t.equal( previous.character, prevCharacter, "previous matches" )
+		}
+		
+		state.onChange( handleChanged )
+
+		state.set("character", "Link", true)
+		
+		prevCharacter = "Link"
+		currCharacter = "Goron"
+		
+		state.set("character", "Goron")
+		
+		prevCharacter = "Goron"
+		currCharacter = "Ganon"
+		
+		state.set("character", "Ganon")
+		state.offChange( handleChanged )
 	})
 	
 })
