@@ -1,5 +1,19 @@
 # Current State
 
+[![build status][travis-image]][travis-url]
+[![stability][stability-image]][stability-url]
+[![NPM version][npm-image]][npm-url]
+[![Downloads][downloads-image]][downloads-url]
+
+[stability-image]: https://img.shields.io/badge/stability-stable-brightgreen.svg?style=flat-square
+[stability-url]: https://nodejs.org/api/documentation.html#documentation_stability_index
+[npm-image]: https://img.shields.io/npm/v/current-state.svg?style=flat-square
+[npm-url]: https://npmjs.org/package/current-state
+[travis-image]: https://img.shields.io/travis/TatumCreative/npm-current-state/master.svg?style=flat-square
+[travis-url]: http://travis-ci.org/TatumCreative/npm-current-state
+[downloads-image]: http://img.shields.io/npm/dm/current-state.svg?style=flat-square
+[downloads-url]: https://npmjs.org/package/current-state
+
 A node module that provides a mutable object that stores state. Once the underyling object is mutated through the interface a `changed` event is fired for reactive application design. It unsafely provides the underlying data object using the `get()` command, and re-uses the passed in object. The changed event provides the `current` and `previous` object. This module was built in a way to limit memory allocation and garbage collection.
 
 # Usage

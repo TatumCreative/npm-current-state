@@ -18,5 +18,8 @@
   "homepage": "https://github.com/TatumCreative/npm-current-state#readme",
   "dependencies": {
     "object-assign": "^4.0.1"
+  },
+  "devDependencies": {
+    "browserify": "^12.0.1"
   }
 }
