@@ -20,6 +20,8 @@
     "object-assign": "^4.0.1"
   },
   "devDependencies": {
-    "browserify": "^12.0.1"
+    "browserify": "^12.0.1",
+    "faucet": "0.0.1",
+    "tape": "^4.2.2"
   }
 }
